@@ -12,7 +12,8 @@
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail",
-    "start:test": "NODE_ENV=test node index.js"
+    "start:test": "NODE_ENV=test node index.js",
+    "clearout": "rm -rf node_modules && npm install && cd ./react-ui && rm -rf node_modules && npm install"
   },
   "engines": {
     "node": "14.19.3",
@@ -27,9 +28,6 @@
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-jest": "^26.2.2",
     "express": "^4.18.1",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
@@ -37,6 +35,9 @@
     "mongoose": "^6.3.4"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-jest": "^26.2.2",
     "eslint": "^8.16.0",
     "jest": "^28.1.0",
     "lint-staged": "^12.4.2",

@@ -11,6 +11,8 @@ const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 //const Blog = require('./models/blog')
 
+
+
 logger.info('connecting to', config.MONGODB_URI)
 
 mongoose
