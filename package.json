@@ -8,7 +8,7 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --runInBand --forceExit",
     "lint": "eslint .",
-    "build:ui": "rm -rf build && cd ./react-ui && npm run build",
+    "build:ui": "cd ./react-ui && rm -rf build && npm run build",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail",
