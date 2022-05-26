@@ -26,9 +26,6 @@
       "react-app/jest"
     ]
   },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -49,7 +46,6 @@
     "cypress": "^9.7.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^26.2.2",
-    "lint-staged": "^12.4.2",
     "prettier": "2.6.2"
   }
 }
