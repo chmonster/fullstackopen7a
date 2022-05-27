@@ -8,11 +8,9 @@ const User = require('./server/models/user')
 
 const url = process.env.MONGODB_URI
 
-
-
 const makeTestUser = async () => {
   await User.deleteMany({})
-  const hash = await bcrypt.hash('P4ss0rF41l', 10)
+  const hash = await bcrypt.hash(process.env.TEST_PASS, 10)
   const user = new User({
     username: 'test',
     name: 'Robert J. Test',
@@ -21,7 +19,7 @@ const makeTestUser = async () => {
   })
   await user.save()
   console.log(user.username, 'created')
-  return await User.findOne({ username: 'test' })
+  return user
 }
  
 const initialBlogs = [
@@ -80,6 +78,7 @@ const initRemoteDB = async () => {
     await blogObject.save()
     console.log(blogObject.title, 'created')
   }
+  mongoose.connection.close()
 }
 
 initRemoteDB()
