@@ -76,6 +76,8 @@ const initRemoteDB = async () => {
   for (let blog of initialBlogs) {
     let blogObject = new Blog({ ...blog, user: testUser.id })
     await blogObject.save()
+    testUser.blogs = testUser.blogs.concat(blogObject._id)
+    await testUser.save()
     console.log(blogObject.title, 'created')
   }
   mongoose.connection.close()
