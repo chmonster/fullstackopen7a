@@ -11,9 +11,9 @@ switch(process.env.NODE_ENV) {
 case 'test':
   MONGODB_URI = process.env.TEST_MONGODB_URI
   break
-case 'development':
+/*case 'development':
   MONGODB_URI = process.env.DEV_MONGODB_URI
-  break
+  break*/
 default:
   MONGODB_URI = process.env.MONGODB_URI
 }

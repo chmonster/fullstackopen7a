@@ -27,7 +27,7 @@ mongoose
 app.use(middleware.tokenExtractor)
 
 app.use(cors())
-app.use(express.static('build'))
+app.use(express.static('react-ui/build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 

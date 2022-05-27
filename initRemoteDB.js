@@ -1,4 +1,4 @@
-console.clear()
+//console.clear()
 
 const mongoose = require('mongoose')
 require('dotenv').config()
@@ -8,9 +8,7 @@ const User = require('./server/models/user')
 
 const url = process.env.MONGODB_URI
 
-mongoose.connect(url)
-  .then(() => console.log('connected to MongoDB'))
-  .catch(error => console.log('error', error.message))
+
 
 const makeTestUser = async () => {
   await User.deleteMany({})
@@ -22,6 +20,8 @@ const makeTestUser = async () => {
     passwordHash: hash,
   })
   await user.save()
+  console.log(user.username, 'created')
+  return await User.findOne({ username: 'test' })
 }
  
 const initialBlogs = [
@@ -65,12 +65,20 @@ const initialBlogs = [
 
 
 const initRemoteDB = async () => {
+
+  try {
+    await mongoose.connect(url)
+    console.log('connected to MongoDB')
+  } catch(error) {
+    console.log('error', error.message)
+  }
+  
   await Blog.deleteMany({})
-  const testUser = makeTestUser()
+  const testUser = await makeTestUser()
   for (let blog of initialBlogs) {
     let blogObject = new Blog({ ...blog, user: testUser.id })
-    //console.log(blogObject)
     await blogObject.save()
+    console.log(blogObject.title, 'created')
   }
 }
 
