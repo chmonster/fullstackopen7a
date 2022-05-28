@@ -7,44 +7,55 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { useDispatch } from 'react-redux'
+import {
+  blogLiked,
+  blogCreated,
+  blogDeleted,
+  userLoggedIn,
+  userLoggedOut,
+  errorMessage
+} from './reducers/notificationReducer'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState({ text: null, type: null })
+  //const [message, setMessage] = useState({ text: null, type: null })
+  const dispatch = useDispatch()
 
   const togglableLoginRef = useRef()
   const togglableBlogRef = useRef()
   const loginRef = useRef()
 
-  const doMessage = (text, type) => {
+  /*const doMessage = (text, type) => {
     setMessage({ text: text, type: type })
     setTimeout(() => {
       setMessage({ text: null, type: null })
     }, 5000)
-  }
+  }*/
 
   const incLike = async (blog) => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
     try {
       await blogService.update(blog.id, updatedBlog)
-      doMessage(`You liked '${updatedBlog.title}'`, 'confirm')
+      dispatch(blogLiked(updatedBlog.title))
     } catch (error) {
       console.log(error)
-      doMessage(error.response.data.error, 'error')
+      dispatch(errorMessage(error.response.data.error))
     }
   }
 
   const deleteBlog = async (blog) => {
     try {
-      const blogDeleted = blog.title
-      if (window.confirm(`Confirm removal of '${blogDeleted}'`)) {
+      //const blog = blog.title
+      if (window.confirm(`Confirm removal of '${blog.title}'`)) {
         await blogService.remove(blog.id)
-        doMessage(`'${blogDeleted}' deleted`, 'confirm')
+        dispatch(blogDeleted(blog.title))
       }
     } catch (error) {
       console.log(error)
-      doMessage(error.response.data.error, 'error')
+      dispatch(errorMessage(error.response.data.error, 'error'))
     }
   }
 
@@ -63,9 +74,9 @@ const App = () => {
       setUser(user)
       loginRef.current.setUsername('')
       loginRef.current.setPassword('')
-      doMessage(`${user.name} logged in`, 'confirm')
+      dispatch(userLoggedIn(user.name))
     } catch (exception) {
-      doMessage('Wrong credentials', 'error')
+      dispatch(errorMessage('Wrong credentials'))
     }
   }
 
@@ -75,12 +86,12 @@ const App = () => {
     try {
       window.localStorage.removeItem('loggedBlogappUser')
       blogService.setToken(null)
-      doMessage(`${user.username} logged out`, 'confirm')
+      dispatch(userLoggedOut(user.username))
       setUser(null)
       console.log(loginRef.current)
     } catch (error) {
       console.log('logout error', error)
-      doMessage(error.message, 'error')
+      dispatch(errorMessage(error.message))
     }
   }
 
@@ -91,11 +102,11 @@ const App = () => {
       .then((returnedBlog) => {
         console.log('returnedBlog', returnedBlog)
         setBlogs(blogs.concat(returnedBlog))
-        doMessage(`Blog '${returnedBlog.title}' saved`, 'confirm')
+        dispatch(blogCreated(returnedBlog.title))
       })
       .catch((error) => {
         console.log(error)
-        doMessage(error.response.data.error.toString(), 'error')
+        dispatch(errorMessage(error.response.data.error))
       })
   }
 
@@ -132,7 +143,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message.text} messageType={message.type} />
+      <Notification />
       <Header user={user} handleLogout={handleLogout} />
       {user === null ? loginForm() : blogForm()}
       {blogs
