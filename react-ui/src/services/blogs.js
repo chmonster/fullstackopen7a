@@ -12,6 +12,7 @@ const create = async (newObject) => {
     headers: { Authorization: token },
   }
   const response = await axios.post(baseUrl, newObject, config)
+  //console.log('service create', response.data)
   return response.data
 }
 
@@ -28,9 +29,14 @@ const remove = (id) => {
   return request.then((response) => response.data)
 }
 
+const get = (id) => {
+  const request = axios.get(`${baseUrl}/${id}`)
+  return request.then((response) => response.data)
+}
+
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then((response) => response.data)
 }
 
-export default { getAll, create, update, setToken, remove }
+export default { getAll, create, update, setToken, remove, get }

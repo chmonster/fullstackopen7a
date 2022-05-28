@@ -9,7 +9,7 @@ const Blog = ({ blog, user, incLike, deleteBlog }) => {
 
   const buttonText = expand ? 'hide' : 'view'
 
-  console.log(user, blog)
+  //console.log(user, blog)
 
   return (
     <div className="blog">

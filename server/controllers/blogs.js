@@ -35,6 +35,8 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
     return response.status(401).json({ error: 'user does not exist' })
   }
 
+  //console.log('post', user)
+
   const blog = new Blog({
     title: body.title,
     author: body.author,

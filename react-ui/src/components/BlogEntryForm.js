@@ -6,6 +6,7 @@ const BlogEntryForm = ({ createBlog }) => {
     createBlog: PropTypes.func.isRequired,
   }
 
+
   const [newTitle, setNewTitle] = useState('')
   const [newUrl, setNewUrl] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
@@ -19,9 +20,9 @@ const BlogEntryForm = ({ createBlog }) => {
     const blogObject = {
       title: newTitle,
       author: newAuthor,
-      url: newUrl,
+      url: newUrl
     }
-    console.log(blogObject)
+    //console.log(blogObject)
     createBlog(blogObject)
     setNewTitle('')
     setNewUrl('')
