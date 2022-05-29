@@ -1,11 +1,32 @@
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { createBlog } from '../reducers/blogReducer'
+import { blogCreated, errorMessage } from '../reducers/notificationReducer'
+
 import PropTypes from 'prop-types'
 
-const BlogEntryForm = ({ createBlog }) => {
+const BlogEntryForm = forwardRef((props, ref) => {
+  BlogEntryForm.displayName='BlogEntryForm'
+
   BlogEntryForm.propTypes = {
-    createBlog: PropTypes.func.isRequired,
+    createBlog: PropTypes.func.isRequired
   }
 
+  const dispatch = useDispatch()
+  const toggleVisibility = ref.current
+  //console.log(toggleVisibility)
+
+  const newBlog = async (blogObject) => {
+    toggleVisibility()
+    try {
+      console.log('create', blogObject)
+      dispatch(createBlog(blogObject))
+      dispatch(blogCreated(blogObject.title))
+    } catch(error) {
+      console.log(error)
+      dispatch(errorMessage(error.response.data.error))
+    }
+  }
 
   const [newTitle, setNewTitle] = useState('')
   const [newUrl, setNewUrl] = useState('')
@@ -23,7 +44,7 @@ const BlogEntryForm = ({ createBlog }) => {
       url: newUrl
     }
     //console.log(blogObject)
-    createBlog(blogObject)
+    newBlog(blogObject)
     setNewTitle('')
     setNewUrl('')
     setNewAuthor('')
@@ -71,6 +92,6 @@ const BlogEntryForm = ({ createBlog }) => {
       </form>
     </div>
   )
-}
+})
 
 export default BlogEntryForm

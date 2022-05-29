@@ -1,15 +1,38 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { deleteBlogById, incLikes } from '../reducers/blogReducer'
+import { blogDeleted, blogLiked, errorMessage } from '../reducers/notificationReducer'
 
-const Blog = ({ blog, user, incLike, deleteBlog }) => {
+const Blog = ({ blog, user }) => {
   const [expand, setExpand] = useState(false)
+  const dispatch = useDispatch()
 
   const toggleExpand = () => {
     setExpand(!expand)
   }
-
   const buttonText = expand ? 'hide' : 'view'
 
-  //console.log(user, blog)
+  const deleteBlog = (blog) => {
+    try {
+      if (window.confirm(`Confirm removal of '${blog.title}'`)) {
+        dispatch(deleteBlogById(blog.id))
+        dispatch(blogDeleted(blog.title))
+      }
+    } catch (error) {
+      console.log(error)
+      dispatch(errorMessage(error.response.data.error, 'error'))
+    }
+  }
+
+  const likeBlog = (blog) => {
+    try {
+      dispatch(incLikes(blog.id))
+      dispatch(blogLiked(blog.title))
+    } catch (error) {
+      console.log(error)
+      dispatch(errorMessage(error.response.data.error))
+    }
+  }
 
   return (
     <div className="blog">
@@ -43,7 +66,7 @@ const Blog = ({ blog, user, incLike, deleteBlog }) => {
               <td>Posted by: {blog.user.name}</td>
               <td style={{ textAlign: 'right' }}>
                 Likes: {blog.likes}
-                <button className="like" onClick={() => incLike(blog)}>
+                <button className="like" onClick={() => likeBlog(blog)}>
                   like
                 </button>
               </td>

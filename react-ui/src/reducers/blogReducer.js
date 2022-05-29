@@ -38,7 +38,6 @@ export const initializeBlogs = () => {
 export const createBlog = (content) =>  {
   return async dispatch => {
     const newBlog = await blogService.create(content)
-    //console.log('blogReducer createBlog', newBlog)
     const addedBlog = await blogService.get(newBlog.id)
     console.log('blogReducer createBlog', addedBlog)
     dispatch(appendBlog(addedBlog))

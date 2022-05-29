@@ -9,18 +9,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  blogLiked,
-  blogCreated,
-  blogDeleted,
   userLoggedIn,
   userLoggedOut,
   errorMessage
 } from './reducers/notificationReducer'
 import {
-  createBlog,
-  deleteBlogById,
   initializeBlogs,
-  incLikes
 } from './reducers/blogReducer'
 
 const App = () => {
@@ -32,31 +26,6 @@ const App = () => {
   const togglableLoginRef = useRef()
   const togglableBlogRef = useRef()
   const loginRef = useRef()
-
-  const likeBlog = async (blog) => {
-    //const updatedBlog = { ...blog, likes: blog.likes + 1 }
-    try {
-      //await blogService.update(blog.id, updatedBlog)
-      dispatch(incLikes(blog.id))
-      dispatch(blogLiked(blog.title))
-    } catch (error) {
-      console.log(error)
-      dispatch(errorMessage(error.response.data.error))
-    }
-  }
-
-  const deleteBlog = async (blog) => {
-    try {
-      //const blog = blog.title
-      if (window.confirm(`Confirm removal of '${blog.title}'`)) {
-        dispatch(deleteBlogById(blog.id))
-        dispatch(blogDeleted(blog.title))
-      }
-    } catch (error) {
-      console.log(error)
-      dispatch(errorMessage(error.response.data.error, 'error'))
-    }
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -94,28 +63,7 @@ const App = () => {
     }
   }
 
-  const newBlog = async (blogObject) => {
-    togglableBlogRef.current.toggleVisibility()
-    /*blogService
-      .create(blogObject)
-      .then((returnedBlog) => {
-        console.log('returnedBlog', returnedBlog)
-        //setBlogs(blogs.concat(returnedBlog))
-        dispatch(appendBlogs(blogObject))
-        dispatch(blogCreated(returnedBlog.title))
-      })*/
-    try {
-      console.log('create', blogObject)
-      dispatch(createBlog(blogObject))
-      dispatch(blogCreated(blogObject.title))
-    } catch(error) {
-      console.log(error)
-      dispatch(errorMessage(error.response.data.error))
-    }
-  }
-
   useEffect(() => {
-    //blogService.getAll().then((blogs) => setBlogs(blogs))
     dispatch(initializeBlogs())
   }, [])
 
@@ -141,7 +89,7 @@ const App = () => {
   const blogForm = () => (
     <>
       <Togglable buttonLabel="new blog" ref={togglableBlogRef}>
-        <BlogEntryForm createBlog={newBlog} />
+        <BlogEntryForm ref={togglableBlogRef} />
       </Togglable>
     </>
   )
@@ -161,9 +109,7 @@ const App = () => {
           <Blog
             key={blog.id}
             blog={blog}
-            incLike={likeBlog}
             user={user}
-            deleteBlog={deleteBlog}
           />
         ))}
     </div>

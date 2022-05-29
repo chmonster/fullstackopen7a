@@ -17,11 +17,7 @@ const Togglable = forwardRef((props, ref) => {
     setVisible(!visible)
   }
 
-  useImperativeHandle(ref, () => {
-    return {
-      toggleVisibility,
-    }
-  })
+  useImperativeHandle(ref, () => toggleVisibility)
 
   const buttonStyle = {
     display: 'flex',
