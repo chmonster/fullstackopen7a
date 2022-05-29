@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import Header from './components/Header'
-import Blog from './components/Blog'
+import BlogList from './components/BlogList'
 import LoginForm from './components/LoginForm'
 import BlogEntryForm from './components/BlogEntryForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   userLoggedIn,
   userLoggedOut,
@@ -94,24 +94,13 @@ const App = () => {
     </>
   )
 
-  const blogs = useSelector(state => state.blogs)
-  console.log(blogs)
-
   return (
     <div>
       <Notification />
       <Header user={user} handleLogout={handleLogout} />
       {user === null ? loginForm() : blogForm()}
+      <BlogList user={user} />
 
-      {blogs
-        //.sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            user={user}
-          />
-        ))}
     </div>
   )
 }
