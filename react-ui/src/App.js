@@ -1,4 +1,8 @@
 import { useEffect } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
@@ -15,19 +19,33 @@ const App = () => {
   const dispatch = useDispatch()
   //const loggedUser = useSelector(state => state.login)
 
+  const padding = {
+    padding: 5
+  }
+
+
   useEffect(() => {
     dispatch(initializeBlogs())
     dispatch(initializeUsers())
     dispatch(initializeLogin())
   }, [dispatch])
 
+
   return (
-    <div>
+    <>
       <Notification />
       <Header />
-      <BlogList />
-      <UserList />
-    </div>
+      <Router>
+        <div>
+          <Link style={padding} to='/blogs'>blogs</Link>
+          <Link style={padding} to='/users'>users</Link>
+        </div>
+        <Routes>
+          <Route path='/blogs' element={<BlogList />} />
+          <Route path='/users' element={<UserList />} />
+        </Routes>
+      </Router>
+    </>
   )
 }
 
