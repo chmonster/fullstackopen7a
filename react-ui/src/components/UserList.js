@@ -1,5 +1,6 @@
 //import Blog from './Blog'
 import { useSelector } from 'react-redux'
+import User from './User'
 
 const UserList = () => {
   //const blogs = useSelector(state => state.blogs)
@@ -13,6 +14,8 @@ const UserList = () => {
         .map(user => (
           <div key={user.id}>
             {user.name} ({user.username}) wrote {user.blogs.length} blogs
+            <User user={user} />
+            <br />
           </div>
         ))
       }

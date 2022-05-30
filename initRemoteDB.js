@@ -94,8 +94,8 @@ const initRemoteDB = async () => {
   await Blog.deleteMany({})
   const users = await makeTestUsers()
   for (let blog of initialBlogs) {
-    let testUser = users[Math.floor(Math.random()*users.length)]
-    let blogObject = new Blog({ ...blog, user: testUser.id })
+    const testUser = users[Math.floor(Math.random()*users.length)]
+    const blogObject = new Blog({ ...blog, user: testUser.id })
     await blogObject.save()
     testUser.blogs = testUser.blogs.concat(blogObject._id)
     await testUser.save()
