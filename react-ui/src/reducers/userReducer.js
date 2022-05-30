@@ -1,74 +1,61 @@
 import { createSlice } from '@reduxjs/toolkit'
-import loginService from '../services/login'
-import blogService from '../services/blogs'
-//import { useSelector } from 'react-redux'
-import { errorMessage, userLoggedIn, userLoggedOut } from './notificationReducer'
+import userService from '../services/users'
 
-const initialState = null
+const initialState = []
 
 const userSlice = createSlice({
-  name: 'user',
+  name: 'users',
   initialState,
   reducers: {
-    loginUser(state, action) {
+    appendUser(state, action) {
+      state.push(action.payload)
+    },
+    setUsers(state, action) {
       return action.payload
     },
-    // eslint-disable-next-line no-unused-vars
-    logoutUser(state, action) {
-      return null
+    updateUser(state, action) {
+      const changedUser = action.payload
+      return state.map(user =>
+        user.id !== changedUser.id ? user : changedUser
+      )
     }
   }
 })
 
-export const { loginUser, logoutUser } = userSlice.actions
+export const { appendUser, setUsers, updateUser } = userSlice.actions
 
-export const handleLogin = (credentials) => {
+export const initializeUsers = () => {
   return async dispatch => {
-    console.log('logging in ', credentials.username)
-    try {
-      const user = await loginService.login(credentials)
-      //console.log(user)
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      dispatch(loginUser(user))
-      dispatch(userLoggedIn(user.name))
-    } catch (error) {
-      dispatch(errorMessage('Wrong credentials'))
-      console.log('login error', error)
-    }
+    const users = await userService.getAll()
+    dispatch(setUsers(users))
   }
 }
 
-export const handleLogout = () => {
-  //const user = useSelector(state => state.user)
+export const createUser = (username, name, password) =>  {
   return async dispatch => {
-    const user = window.localStorage.getItem('loggedBlogappUser')
-    console.log('logging out ', user.username)
-    try {
-      window.localStorage.removeItem('loggedBlogappUser')
-      blogService.setToken(null)
-      dispatch(logoutUser())
-      dispatch(userLoggedOut(user.username))
-    } catch (error) {
-      console.log('logout error', error)
-      dispatch(errorMessage(error.message))
-    }
+    const newUser = await userService.create({
+      username, name, password
+    })
+    const addedUser = await userService.get(newUser.id)
+    console.log('userReducer createUser', addedUser)
+    dispatch(appendUser(addedUser))
   }
 }
 
-export const initializeUser = () => {
+export const userDeletedBlog = (blogDeleted) => {
   return async dispatch => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      try {
-        const loggedUser = JSON.parse(loggedUserJSON)
-        console.log('initializeUser', loggedUser)
-        blogService.setToken(loggedUser.token)
-        dispatch(loginUser(loggedUser))
-      } catch(error) {
-        console.log('initializeUser error', error)
-      }
-    }
+    const updatedUser = await userService.get(blogDeleted.user.id)
+    //    console.log(updatedUser)
+    dispatch(updateUser(updatedUser))
+  }
+}
+
+export const userAddedBlog = (blogAdded) => {
+  return async dispatch => {
+    //    console.log('userAddedBlog', blogAdded)
+    const updatedUser = await userService.get(blogAdded.user.id)
+    //    console.log(updatedUser)
+    dispatch(updateUser(updatedUser))
   }
 }
 

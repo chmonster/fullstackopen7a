@@ -25,9 +25,9 @@ const notificationSlice = createSlice({
 
 export const { doConfirm, doError, clearOnTimeout } = notificationSlice.actions
 
-export const userLoggedIn = (user) =>  {
+export const userLoggedIn = (username) =>  {
   return dispatch => {
-    dispatch(doConfirm(`${user} logged in`))
+    dispatch(doConfirm(`${username} logged in`))
     if(timeoutID){
       console.log('timeoutID', timeoutID)
       clearTimeout(timeoutID)
@@ -38,9 +38,9 @@ export const userLoggedIn = (user) =>  {
   }
 }
 
-export const userLoggedOut = (user) =>  {
+export const userLoggedOut = (username) =>  {
   return dispatch => {
-    dispatch(doConfirm(`${user} logged out`))
+    dispatch(doConfirm(`${username} logged out`))
     if(timeoutID){
       console.log('timeoutID', timeoutID)
       clearTimeout(timeoutID)

@@ -1,5 +1,7 @@
+/* eslint-disable no-debugger */
 import { createSlice } from '@reduxjs/toolkit'
 import blogService from '../services/blogs'
+import { userAddedBlog, userDeletedBlog } from './userReducer'
 
 const initialState = []
 
@@ -41,13 +43,18 @@ export const createBlog = (content) =>  {
     const addedBlog = await blogService.get(newBlog.id)
     console.log('blogReducer createBlog', addedBlog)
     dispatch(appendBlog(addedBlog))
+    dispatch(userAddedBlog(addedBlog))
   }
 }
 
 export const deleteBlogById = id => {
   return async dispatch => {
+    //debugger
+    const blogToDelete = await blogService.get(id)
+    //dispatch(userDeletedBlog(blogToDelete))
     await blogService.remove(id)
     dispatch(removeBlog(id))
+    dispatch(userDeletedBlog(blogToDelete))
   }
 }
 

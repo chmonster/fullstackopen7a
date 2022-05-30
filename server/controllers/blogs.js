@@ -72,7 +72,13 @@ blogsRouter.delete('/:id', userExtractor, async (request, response) => {
     return response.status(401).json({ error: 'user not authorized' })
   }
 
+  const updatedBlogList = user.blogs.filter(
+    blog => blog.id !== request.params.id
+  )
+
+  await User.updateOne({ id: blog.user.id }, { blogs: [...updatedBlogList] } )
   await Blog.findByIdAndRemove(request.params.id)
+
   response.status(204).end()
 })
 

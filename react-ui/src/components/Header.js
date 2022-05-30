@@ -1,6 +1,6 @@
 //import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleLogout } from '../reducers/userReducer'
+import { handleLogout } from '../reducers/loginReducer'
 import { useRef } from 'react'
 
 import LoginForm from './LoginForm'
@@ -12,15 +12,15 @@ const Header = () => {
   const logout = () => {
     dispatch(handleLogout())
   }
-  const user = useSelector(state => state.user)
+  const loggedUser = useSelector(state => state.login)
 
-  const username = user ? user.username : ''
-  const name = user ? user.name : ''
+  const username = loggedUser ? loggedUser.username : ''
+  const name = loggedUser ? loggedUser.name : ''
 
   const togglableLoginRef = useRef()
   const togglableBlogRef = useRef()
 
-  const loggedIn = user ? true : false
+  const loggedIn = loggedUser ? true : false
   const hideWhenLoggedIn = { display: loggedIn ? 'none' : '' }
   const showWhenLoggedIn = { display: loggedIn ? '' : 'none' }
 

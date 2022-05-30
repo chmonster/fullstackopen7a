@@ -5,21 +5,41 @@ require('dotenv').config()
 const bcrypt = require('bcrypt')
 const Blog = require('./server/models/blog')
 const User = require('./server/models/user')
+const { forEach } = require('lodash')
 
-const url = process.env.MONGODB_URI
+//const url = process.env.MONGODB_URI
+const url = process.env.DEV_MONGODB_URI
 
-const makeTestUser = async () => {
+const makeTestUsers = async () => {
   await User.deleteMany({})
   const hash = await bcrypt.hash(process.env.TEST_PASS, 10)
-  const user = new User({
-    username: 'test',
-    name: 'Robert J. Test',
-    blogs: [],
-    passwordHash: hash,
-  })
+  const users = [
+    new User({
+      username: 'test',
+      name: 'Robert J. Test',
+      passwordHash: hash,
+    }),
+    new User({
+      username: 'gawd',
+      name: 'Jesus H. Gawd',
+      passwordHash: hash,
+    }),
+    new User({
+      username: 'wilbur',
+      name: 'Wilbur George',
+      passwordHash: hash,
+    })
+  ]
+  let user = users[0]
   await user.save()
   console.log(user.username, 'created')
-  return user
+  user = users[1]
+  await user.save()
+  console.log(user.username, 'created')
+  user = users[2]
+  await user.save()
+  console.log(user.username, 'created')
+  return users
 }
  
 const initialBlogs = [
@@ -72,8 +92,9 @@ const initRemoteDB = async () => {
   }
   
   await Blog.deleteMany({})
-  const testUser = await makeTestUser()
+  const users = await makeTestUsers()
   for (let blog of initialBlogs) {
+    let testUser = users[Math.floor(Math.random()*users.length)]
     let blogObject = new Blog({ ...blog, user: testUser.id })
     await blogObject.save()
     testUser.blogs = testUser.blogs.concat(blogObject._id)
