@@ -1,22 +1,28 @@
-import { useState, forwardRef, useImperativeHandle } from 'react'
-import PropTypes from 'prop-types'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+//import PropTypes from 'prop-types'
+import { handleLogin } from '../reducers/userReducer'
 
-const LoginForm = forwardRef((props, ref) => {
-  LoginForm.displayName = 'LoginForm'
-  LoginForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+const LoginForm = () => {
+
+  const dispatch = useDispatch()
+
+  const [usernameEntry, setUsernameEntry] = useState('')
+  const [passwordEntry, setPasswordEntry] = useState('')
+  const handleUsernameChange = (event) => setUsernameEntry(event.target.value)
+  const handlePasswordChange = (event) => setPasswordEntry(event.target.value)
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    const credentials = {
+      username: usernameEntry,
+      password: passwordEntry
+    }
+    //console.log(credentials)
+    dispatch(handleLogin(credentials))
+    setUsernameEntry('')
+    setPasswordEntry('')
   }
-
-  const onSubmit = props.onSubmit
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const handleUsernameChange = (event) => setUsername(event.target.value)
-  const handlePasswordChange = (event) => setPassword(event.target.value)
-
-  useImperativeHandle(ref, () => {
-    return { username, password, setUsername, setPassword }
-  })
 
   return (
     <div className="loginform">
@@ -24,7 +30,7 @@ const LoginForm = forwardRef((props, ref) => {
         Username:
         <input
           type="text"
-          value={username}
+          value={usernameEntry}
           name="Username"
           id="username"
           onChange={handleUsernameChange}
@@ -32,7 +38,7 @@ const LoginForm = forwardRef((props, ref) => {
         Password:
         <input
           type="password"
-          value={password}
+          value={passwordEntry}
           name="Password"
           id="password"
           onChange={handlePasswordChange}
@@ -44,6 +50,6 @@ const LoginForm = forwardRef((props, ref) => {
       </form>
     </div>
   )
-})
+}
 
 export default LoginForm

@@ -3,14 +3,8 @@ import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { blogCreated, errorMessage } from '../reducers/notificationReducer'
 
-import PropTypes from 'prop-types'
-
 const BlogEntryForm = forwardRef((props, ref) => {
   BlogEntryForm.displayName='BlogEntryForm'
-
-  BlogEntryForm.propTypes = {
-    createBlog: PropTypes.func.isRequired
-  }
 
   const dispatch = useDispatch()
   const toggleVisibility = ref.current
