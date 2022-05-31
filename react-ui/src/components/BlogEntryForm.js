@@ -46,11 +46,11 @@ const BlogEntryForm = forwardRef((props, ref) => {
 
   return (
     <div className="blogEntryForm">
-      <h2 style={{ textAlign: 'center' }}>Enter a Blog</h2>
+      <h2>Enter a Blog</h2>
       <form onSubmit={addBlog}>
         <table>
           <tbody>
-            <tr style={{ display: 'flex', justifyContent: 'center' }}>
+            <tr>
               <td>
                 <input
                   id="title"

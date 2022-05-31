@@ -25,8 +25,8 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="loginform">
-      <form onSubmit={onSubmit} style={{ textAlign: 'center' }}>
+    <div className='loginform'>
+      <form onSubmit={onSubmit}>
         Username:
         <input
           type="text"

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route //, Link
 } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
@@ -11,18 +11,17 @@ import { initializeLogin } from './reducers/loginReducer'
 import Header from './components/Header'
 import BlogList from './components/BlogList'
 import UserList from './components/UserList'
-//import User from '.components/User'
+import User from './components/User'
+import Blog from './components/Blog'
 import Notification from './components/Notification'
 
 const App = () => {
 
   const dispatch = useDispatch()
-  //const loggedUser = useSelector(state => state.login)
 
-  const padding = {
-    padding: 5
-  }
-
+  //const padding = {
+  //  padding: 5
+  //}
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -30,18 +29,15 @@ const App = () => {
     dispatch(initializeLogin())
   }, [dispatch])
 
-
   return (
     <>
       <Notification />
-      <Header />
       <Router>
-        <div>
-          <Link style={padding} to='/blogs'>blogs</Link>
-          <Link style={padding} to='/users'>users</Link>
-        </div>
+        <Header />
         <Routes>
-          <Route path='/blogs' element={<BlogList />} />
+          <Route path='/blogs/:id' element={<Blog />} />
+          <Route path='/users/:id' element={<User />} />
+          <Route path='/' element={<BlogList />} />
           <Route path='/users' element={<UserList />} />
         </Routes>
       </Router>

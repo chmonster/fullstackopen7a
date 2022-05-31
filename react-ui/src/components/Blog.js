@@ -1,22 +1,24 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { deleteBlogById, incLikes } from '../reducers/blogReducer'
+//import { useState } from 'react'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { blogDeleted, blogLiked, errorMessage } from '../reducers/notificationReducer'
+import { incLikes, deleteBlogById } from '../reducers/blogReducer'
 
-const Blog = ({ blog, user }) => {
-  const [expand, setExpand] = useState(false)
+const Blog = () => {
+//  const [expand, setExpand] = useState(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const toggleExpand = () => {
-    setExpand(!expand)
-  }
-  const buttonText = expand ? 'hide' : 'view'
+  const id = useParams().id
+  const blog = useSelector(state => state.blogs.find(b => b.id === id))
+  const user = useSelector(state => state.login)
 
   const deleteBlog = (blog) => {
     try {
       if (window.confirm(`Confirm removal of '${blog.title}'`)) {
         dispatch(deleteBlogById(blog.id))
         dispatch(blogDeleted(blog.title))
+        navigate('/')
       }
     } catch (error) {
       console.log(error)
@@ -34,46 +36,24 @@ const Blog = ({ blog, user }) => {
     }
   }
 
+  console.log(blog.user.id)
+
   return (
-    <div className="blog">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <a href={blog.url} title={blog.title} alt={blog.title}>
-                {blog.title}
-              </a>
-            </td>
-            <td style={{ textAlign: 'right' }}>
-              {blog.author}
-              <button className={buttonText} onClick={toggleExpand}>
-                {buttonText}
-              </button>
-              {user && user.username === blog.user.username && (
-                <button className="delete" onClick={() => deleteBlog(blog)}>
-                  delete
-                </button>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          {expand && (
-            <tr>
-              <td>URL: {blog.url}</td>
-              <td>Posted by: {blog.user.name}</td>
-              <td style={{ textAlign: 'right' }}>
-                Likes: {blog.likes}
-                <button className="like" onClick={() => likeBlog(blog)}>
-                  like
-                </button>
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+    <div className='blog'>
+      <h2>{blog.title}</h2>
+      <a href={blog.url} title={blog.title}>
+        {blog.url}
+      </a><br />
+      Posted by: <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link><br />
+      Likes: {blog.likes}
+      <button className="like" onClick={() => likeBlog(blog)}>
+        like
+      </button>
+      {user && user.username === blog.user.username && (
+        <button className="delete" onClick={() => deleteBlog(blog)}>
+          delete
+        </button>
+      )}
     </div>
   )
 }

@@ -19,16 +19,52 @@
 }
 
 table {
-  width: 75%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
 }
 
 h2 {
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
 togglable {
   justify-content: 'center';
+}
+
+.loginform {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blog {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.user {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app {
+  text-align: 'center';
+  justify-content: 'full';
 }
