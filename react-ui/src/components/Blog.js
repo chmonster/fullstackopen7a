@@ -56,6 +56,8 @@ const Blog = () => {
     return null
   }
 
+  console.log(blog)
+
   return (
     <div className='blog'>
       <h2>{blog.title}</h2>

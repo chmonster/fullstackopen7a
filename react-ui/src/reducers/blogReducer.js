@@ -60,22 +60,19 @@ export const deleteBlogById = id => {
 
 export const incLikes = id => {
   return async dispatch => {
-    console.log('incLikes', id)
     const blog = await blogService.get(id)
     const updatedBlog = { ...blog, likes: blog.likes+1 }
     const response = await blogService.update(id, updatedBlog)
+    console.log('incLikes', response)
     dispatch(updateBlog(response))
   }
 }
 
 export const addComment = (id, comment) => {
   return async dispatch => {
-    console.log('addComment', id, comment)
-    //const blog = await blogService.get(id)
-    //const updatedBlog = { ...blog, comments: [...blog.comments, comment] }
     const sendObject = { 'comment': comment }
     const response = await blogService.comment(id, sendObject)
-    console.log(response)
+    console.log('addComment', response)
     dispatch(updateBlog(response))
   }
 }

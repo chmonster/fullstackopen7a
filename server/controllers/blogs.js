@@ -65,6 +65,10 @@ blogsRouter.post('/:id/comments', async (request, response) => {
   }
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
     new: true,
+  }).populate('user', {
+    username: 1,
+    name: 1,
+    blogs: 1,
   })
   response.status(201).json(updatedBlog)
 })
@@ -118,6 +122,10 @@ blogsRouter.put('/:id', async (request, response) => {
   }
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
     new: true,
+  }).populate('user', {
+    username: 1,
+    name: 1,
+    blogs: 1,
   })
   response.json(updatedBlog)
 })
