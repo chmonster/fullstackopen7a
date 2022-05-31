@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { handleLogout } from '../reducers/loginReducer'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Header } from 'semantic-ui-react'
 import LoginForm from './LoginForm'
 import BlogEntryForm from './BlogEntryForm'
 import Togglable from './Togglable'
 
-const Header = () => {
+const BlogHeader = () => {
   const dispatch = useDispatch()
   const logout = () => {
     dispatch(handleLogout())
@@ -30,14 +31,14 @@ const Header = () => {
 
   return (
     <div className="header">
-      <h2>Blogs</h2>
+      <Header as ='h2'>Blogs</Header>
       <div className='menu'>
         <Link style={padding} to='/'>blogs</Link>
         <Link style={padding} to='/users'>users</Link>
       </div>
       <div style={showWhenLoggedIn}>
         {username} ({name}) logged in
-        <button onClick={logout}>Log out</button>
+        <Button onClick={logout}>Log out</Button>
         <Togglable buttonLabel="new blog" ref={togglableBlogRef}>
           <BlogEntryForm ref={togglableBlogRef} />
         </Togglable>
@@ -51,4 +52,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default BlogHeader

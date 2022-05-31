@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
+import { Button, Header, Input } from 'semantic-ui-react'
 
 const Blog = () => {
 
@@ -60,22 +61,22 @@ const Blog = () => {
 
   return (
     <div className='blog'>
-      <h2>{blog.title}</h2>
+      <Header as ='h2'>{blog.title}</Header>
       <a href={blog.url} title={blog.title}>
         {blog.url}
       </a><br />
       Posted by: <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link><br />
       Likes: {blog.likes}
-      <button className="like" onClick={() => likeBlog(blog)}>
+      <Button className="like" onClick={() => likeBlog(blog)}>
         like
-      </button>
+      </Button>
       {user && user.username === blog.user.username && (
-        <button className="delete" onClick={() => deleteBlog(blog)}>
+        <Button className="delete" onClick={() => deleteBlog(blog)}>
           delete
-        </button>
+        </Button>
       )}
       {blog.comments.length && (
-        <h2>Comments:</h2>
+        <Header as ='h2'>Comments:</Header>
       )}
       {blog.comments && (
         blog.comments.map((comment, i) => (
@@ -85,15 +86,15 @@ const Blog = () => {
         ))
       )}
       <form onSubmit={doComment}>
-        <input
+        <Input
           id="comment"
           value={commentEntry}
           onChange={handleCommentChange}
           placeholder="comment?"
         />
-        <button id="save-comment" type="submit">
+        <Button id="save-comment" type="submit">
           save
-        </button>
+        </Button>
       </form>
     </div>
   )

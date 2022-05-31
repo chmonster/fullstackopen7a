@@ -2,6 +2,7 @@ import { useState, forwardRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { blogCreated, errorMessage } from '../reducers/notificationReducer'
+import { Button, Header, Input } from 'semantic-ui-react'
 
 const BlogEntryForm = forwardRef((props, ref) => {
   BlogEntryForm.displayName='BlogEntryForm'
@@ -46,13 +47,13 @@ const BlogEntryForm = forwardRef((props, ref) => {
 
   return (
     <div className="blogEntryForm">
-      <h2>Enter a Blog</h2>
+      <Header as='h2'>Enter a Blog</Header>
       <form onSubmit={addBlog}>
         <table>
           <tbody>
             <tr>
               <td>
-                <input
+                <Input
                   id="title"
                   value={newTitle}
                   onChange={handleTitleChange}
@@ -60,7 +61,7 @@ const BlogEntryForm = forwardRef((props, ref) => {
                 />
               </td>
               <td>
-                <input
+                <Input
                   id="url"
                   value={newUrl}
                   onChange={handleUrlChange}
@@ -68,7 +69,7 @@ const BlogEntryForm = forwardRef((props, ref) => {
                 />
               </td>
               <td>
-                <input
+                <Input
                   id="author"
                   value={newAuthor}
                   onChange={handleAuthorChange}
@@ -76,9 +77,9 @@ const BlogEntryForm = forwardRef((props, ref) => {
                 />
               </td>
               <td>
-                <button id="save-button" type="submit">
+                <Button id="save-button" type="submit">
                   save
-                </button>
+                </Button>
               </td>
             </tr>
           </tbody>

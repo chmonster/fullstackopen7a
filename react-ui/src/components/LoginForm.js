@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 //import PropTypes from 'prop-types'
 import { handleLogin } from '../reducers/loginReducer'
+import { Button, Input } from 'semantic-ui-react'
 
 const LoginForm = () => {
 
@@ -28,7 +29,7 @@ const LoginForm = () => {
     <div className='loginform'>
       <form onSubmit={onSubmit}>
         Username:
-        <input
+        <Input
           type="text"
           value={usernameEntry}
           name="Username"
@@ -36,7 +37,7 @@ const LoginForm = () => {
           onChange={handleUsernameChange}
         />
         Password:
-        <input
+        <Input
           type="password"
           value={passwordEntry}
           name="Password"
@@ -44,9 +45,9 @@ const LoginForm = () => {
           onChange={handlePasswordChange}
         />
         <br />
-        <button id="login-button" type="submit">
+        <Button id="login-button" type="submit">
           log in
-        </button>
+        </Button>
       </form>
     </div>
   )

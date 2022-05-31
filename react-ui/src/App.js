@@ -8,7 +8,7 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { initializeLogin } from './reducers/loginReducer'
 
-import Header from './components/Header'
+import BlogHeader from './components/BlogHeader'
 import BlogList from './components/BlogList'
 import UserList from './components/UserList'
 import User from './components/User'
@@ -33,7 +33,7 @@ const App = () => {
     <>
       <Notification />
       <Router>
-        <Header />
+        <BlogHeader />
         <Routes>
           <Route path='/blogs/:id' element={<Blog />} />
           <Route path='/users/:id' element={<User />} />

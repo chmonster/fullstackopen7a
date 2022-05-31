@@ -9,7 +9,7 @@ const User = () => {
   }
   return (
     <div className="user">
-      <h2>{user.name} ({user.username})</h2>
+      <Header as ='h2'>{user.name} ({user.username})</Header>
       Blogs:
       {
         user.blogs.map(blog => (

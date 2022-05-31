@@ -1,6 +1,7 @@
 //import Blog from './Blog'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Header } from 'semantic-ui-react'
 
 const UserList = () => {
   //const blogs = useSelector(state => state.blogs)
@@ -8,7 +9,7 @@ const UserList = () => {
   console.log('users', users)
   return (
     <div className='userlist'>
-      <h2>User List</h2>
+      <Header as ='h2'>User List</Header>
       <table><tbody>
         {[...users]
           .sort((a, b) => b.blogs.length - a.blogs.length)

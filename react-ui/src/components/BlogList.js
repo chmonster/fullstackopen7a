@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteBlogById } from '../reducers/blogReducer'
 import { blogDeleted, errorMessage } from '../reducers/notificationReducer'
+import { Button, Header } from 'semantic-ui-react'
 
 const BlogList = () => {
 
@@ -24,7 +25,7 @@ const BlogList = () => {
 
   return (
     <div className='bloglist'>
-      <h2>Blog List</h2>
+      <Header as='h2'>Blog List</Header>
       <table><tbody>
         {[...blogs]
           .sort((a, b) => b.likes - a.likes)
@@ -40,9 +41,9 @@ const BlogList = () => {
               </td>
               <td>
                 {user && user.username === blog.user.username && (
-                  <button className="delete" onClick={() => deleteBlog(blog)}>
+                  <Button className="delete" onClick={() => deleteBlog(blog)}>
                     delete
-                  </button>
+                  </Button>
                 )}
               </td>
             </tr>
