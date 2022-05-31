@@ -1,6 +1,6 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 
 const Togglable = forwardRef((props, ref) => {
   Togglable.displayName = 'Togglable'
@@ -30,22 +30,14 @@ const Togglable = forwardRef((props, ref) => {
   return (
     <div className="togglable">
       <div style={hideWhenVisible}>
-        <Button
-          onClick={toggleVisibility}
-          style={buttonStyle}
-          className="toggle"
-        >
-          {props.buttonLabel}
+        <Button onClick={toggleVisibility} style={buttonStyle} className="toggle">
+          <Icon name='compose' />{props.buttonLabel}
         </Button>
       </div>
       <div style={showWhenVisible} className="togglableContent">
         {props.children}
-        <Button
-          onClick={toggleVisibility}
-          className="cancel"
-          style={buttonStyle}
-        >
-          cancel
+        <Button onClick={toggleVisibility} className="cancel" style={buttonStyle}>
+          <Icon name='hide' />cancel
         </Button>
       </div>
     </div>

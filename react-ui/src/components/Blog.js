@@ -4,7 +4,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
-import { Button, Header, Input } from 'semantic-ui-react'
+import { Container, Button, Header, Form, Input, List,
+  Label, Icon } from 'semantic-ui-react'
 
 const Blog = () => {
 
@@ -68,34 +69,40 @@ const Blog = () => {
       Posted by: <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link><br />
       Likes: {blog.likes}
       <Button className="like" onClick={() => likeBlog(blog)}>
-        like
+        <Icon name='like' />like
       </Button>
       {user && user.username === blog.user.username && (
         <Button className="delete" onClick={() => deleteBlog(blog)}>
-          delete
+          <Icon name='delete' />delete
         </Button>
       )}
       {blog.comments.length && (
         <Header as ='h2'>Comments:</Header>
       )}
       {blog.comments && (
-        blog.comments.map((comment, i) => (
-          <ul key={i}>
-            <li>{comment}</li>
-          </ul>
-        ))
+        <Container text textAlign='justified'><List>
+          {[...blog.comments].map((comment, i) =>
+            (<List.Item key={i}>
+              <List.Icon name='comment' />
+              <List.Content>{comment}</List.Content>
+            </List.Item>)
+          )}
+        </List></Container>
       )}
-      <form onSubmit={doComment}>
-        <Input
-          id="comment"
-          value={commentEntry}
-          onChange={handleCommentChange}
-          placeholder="comment?"
-        />
+      <Form onSubmit={doComment}>
+        <Form.Field>
+          <Label><Icon name='comment' />Add a comment</Label>
+          <Input
+            id="comment"
+            value={commentEntry}
+            onChange={handleCommentChange}
+            placeholder="comment?"
+          />
+        </Form.Field>
         <Button id="save-comment" type="submit">
-          save
+          <Icon name='save' />save
         </Button>
-      </form>
+      </Form>
     </div>
   )
 }

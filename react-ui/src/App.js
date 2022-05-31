@@ -8,6 +8,8 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { initializeLogin } from './reducers/loginReducer'
 
+import { Container } from 'semantic-ui-react'
+
 import BlogHeader from './components/BlogHeader'
 import BlogList from './components/BlogList'
 import UserList from './components/UserList'
@@ -30,7 +32,7 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <>
+    <><Container>
       <Notification />
       <Router>
         <BlogHeader />
@@ -41,7 +43,7 @@ const App = () => {
           <Route path='/users' element={<UserList />} />
         </Routes>
       </Router>
-    </>
+    </Container></>
   )
 }
 

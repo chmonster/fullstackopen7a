@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteBlogById } from '../reducers/blogReducer'
 import { blogDeleted, errorMessage } from '../reducers/notificationReducer'
-import { Button, Header } from 'semantic-ui-react'
+import { Button, Header, Table, Icon } from 'semantic-ui-react'
 
 const BlogList = () => {
 
@@ -26,30 +26,30 @@ const BlogList = () => {
   return (
     <div className='bloglist'>
       <Header as='h2'>Blog List</Header>
-      <table><tbody>
+      <Table as='table'><Table.Body as='tbody'>
         {[...blogs]
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
-            <tr key={blog.id}>
-              <td style={{ textAlign: 'justify' }}>
+            <Table.Row as='tr' key={blog.id}>
+              <Table.Cell as='td' style={{ textAlign: 'justify' }}>
                 <Link to={`/blogs/${blog.id}`}>
                   {blog.title}
                 </Link>
-              </td>
-              <td style={{ textAlign: 'justify' }}>
+              </Table.Cell>
+              <Table.Cell as='td' style={{ textAlign: 'justify' }}>
                 {blog.author}
-              </td>
-              <td>
+              </Table.Cell>
+              <Table.Cell as='td'>
                 {user && user.username === blog.user.username && (
                   <Button className="delete" onClick={() => deleteBlog(blog)}>
-                    delete
+                    <Icon name='delete' />delete
                   </Button>
                 )}
-              </td>
-            </tr>
+              </Table.Cell>
+            </Table.Row>
           ))
         }
-      </tbody></table>
+      </Table.Body></Table>
     </div>
   )
 }

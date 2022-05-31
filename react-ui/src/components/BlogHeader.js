@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { handleLogout } from '../reducers/loginReducer'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Header } from 'semantic-ui-react'
+import { Button, Header, Icon } from 'semantic-ui-react'
 import LoginForm from './LoginForm'
 import BlogEntryForm from './BlogEntryForm'
 import Togglable from './Togglable'
@@ -38,7 +38,9 @@ const BlogHeader = () => {
       </div>
       <div style={showWhenLoggedIn}>
         {username} ({name}) logged in
-        <Button onClick={logout}>Log out</Button>
+        <Button onClick={logout}>
+          <Icon name='log out' />Log out
+        </Button>
         <Togglable buttonLabel="new blog" ref={togglableBlogRef}>
           <BlogEntryForm ref={togglableBlogRef} />
         </Togglable>

@@ -2,7 +2,7 @@ import { useState, forwardRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { blogCreated, errorMessage } from '../reducers/notificationReducer'
-import { Button, Header, Input } from 'semantic-ui-react'
+import { Button, Form, Header, Input, Table, Label, Icon } from 'semantic-ui-react'
 
 const BlogEntryForm = forwardRef((props, ref) => {
   BlogEntryForm.displayName='BlogEntryForm'
@@ -48,43 +48,52 @@ const BlogEntryForm = forwardRef((props, ref) => {
   return (
     <div className="blogEntryForm">
       <Header as='h2'>Enter a Blog</Header>
-      <form onSubmit={addBlog}>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <Input
-                  id="title"
-                  value={newTitle}
-                  onChange={handleTitleChange}
-                  placeholder="title"
-                />
-              </td>
-              <td>
-                <Input
-                  id="url"
-                  value={newUrl}
-                  onChange={handleUrlChange}
-                  placeholder="URL"
-                />
-              </td>
-              <td>
-                <Input
-                  id="author"
-                  value={newAuthor}
-                  onChange={handleAuthorChange}
-                  placeholder="author"
-                />
-              </td>
-              <td>
+      <Form onSubmit={addBlog}>
+        <Table as='table'>
+          <Table.Body as='tbody'>
+            <Table.Row as='tr'>
+              <Table.Cell as='td'>
+                <Form.Field>
+                  <Label><Icon name='book' />Title</Label>
+                  <Input
+                    id="title"
+                    value={newTitle}
+                    onChange={handleTitleChange}
+                    placeholder="title"
+                  />
+                </Form.Field>
+              </Table.Cell>
+              <Table.Cell as='td'>
+                <Form.Field>
+                  <Label><Icon name='linkify' />URL</Label>
+                  <Input
+                    id="url"
+                    value={newUrl}
+                    onChange={handleUrlChange}
+                    placeholder="URL"
+                  />
+                </Form.Field>
+              </Table.Cell>
+              <Table.Cell as='td'>
+                <Form.Field>
+                  <Label><Icon name='pencil' />Author</Label>
+                  <Input
+                    id="author"
+                    value={newAuthor}
+                    onChange={handleAuthorChange}
+                    placeholder="author"
+                  />
+                </Form.Field>
+              </Table.Cell>
+              <Table.Cell as='td'>
                 <Button id="save-button" type="submit">
-                  save
+                  <Icon name='save' />save
                 </Button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </Form>
     </div>
   )
 })
