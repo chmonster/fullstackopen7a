@@ -68,4 +68,16 @@ export const incLikes = id => {
   }
 }
 
+export const addComment = (id, comment) => {
+  return async dispatch => {
+    console.log('addComment', id, comment)
+    //const blog = await blogService.get(id)
+    //const updatedBlog = { ...blog, comments: [...blog.comments, comment] }
+    const sendObject = { 'comment': comment }
+    const response = await blogService.comment(id, sendObject)
+    console.log(response)
+    dispatch(updateBlog(response))
+  }
+}
+
 export default blogSlice.reducer

@@ -7,6 +7,12 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
 
+const comment = async (id, blogObject) => {
+  const response = await axios.post(`${baseUrl}/${id}/comments`, blogObject)
+  console.log('blogService comment', id, blogObject.comment, response.data)
+  return response.data
+}
+
 const create = async (newObject) => {
   const config = {
     headers: { Authorization: token },
@@ -39,4 +45,4 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
-export default { getAll, create, update, setToken, remove, get }
+export default { getAll, create, update, setToken, remove, get, comment }

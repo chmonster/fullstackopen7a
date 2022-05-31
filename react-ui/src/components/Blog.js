@@ -1,11 +1,15 @@
-//import { useState } from 'react'
+
+import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { blogDeleted, blogLiked, errorMessage } from '../reducers/notificationReducer'
-import { incLikes, deleteBlogById } from '../reducers/blogReducer'
+import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
+import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
 
 const Blog = () => {
-//  const [expand, setExpand] = useState(false)
+
+  const [commentEntry, setComment] = useState('')
+  const handleCommentChange = (event) => setComment(event.target.value)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -36,7 +40,21 @@ const Blog = () => {
     }
   }
 
-  console.log(blog.user.id)
+  const doComment = (event) => {
+    event.preventDefault()
+    try {
+      dispatch(addComment(id, commentEntry))
+      dispatch(commentAdded(blog.title))
+      setComment('')
+    } catch (error) {
+      console.log(error)
+      dispatch(errorMessage(error.response.data.error))
+    }
+  }
+
+  if (!blog) {
+    return null
+  }
 
   return (
     <div className='blog'>
@@ -54,6 +72,27 @@ const Blog = () => {
           delete
         </button>
       )}
+      {blog.comments.length && (
+        <h2>Comments:</h2>
+      )}
+      {blog.comments && (
+        blog.comments.map((comment, i) => (
+          <ul key={i}>
+            <li>{comment}</li>
+          </ul>
+        ))
+      )}
+      <form onSubmit={doComment}>
+        <input
+          id="comment"
+          value={commentEntry}
+          onChange={handleCommentChange}
+          placeholder="comment?"
+        />
+        <button id="save-comment" type="submit">
+          save
+        </button>
+      </form>
     </div>
   )
 }

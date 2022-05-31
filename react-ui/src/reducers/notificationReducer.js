@@ -90,6 +90,19 @@ export const blogCreated = (title) =>  {
   }
 }
 
+export const commentAdded = (title) =>  {
+  return dispatch => {
+    dispatch(doConfirm(`You commented on '${title}'`))
+    if(timeoutID){
+      console.log('timeoutID', timeoutID)
+      clearTimeout(timeoutID)
+    }
+    timeoutID = setTimeout(() => {
+      dispatch(clearOnTimeout())
+    }, duration*1000)
+  }
+}
+
 export const errorMessage = (message) =>  {
   return dispatch => {
     dispatch(doError(`Error: ${message}`))
