@@ -21,10 +21,6 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  //const padding = {
-  //  padding: 5
-  //}
-
   useEffect(() => {
     dispatch(initializeBlogs())
     dispatch(initializeUsers())
@@ -32,7 +28,7 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <><Container>
+    <div className='app'><Container>
       <Notification />
       <Router>
         <BlogHeader />
@@ -43,7 +39,7 @@ const App = () => {
           <Route path='/users' element={<UserList />} />
         </Routes>
       </Router>
-    </Container></>
+    </Container></div>
   )
 }
 

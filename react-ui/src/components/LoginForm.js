@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 import { useDispatch } from 'react-redux'
-//import PropTypes from 'prop-types'
 import { handleLogin } from '../reducers/loginReducer'
-import { Button, Input, Form, Label, Icon } from 'semantic-ui-react'
+import { Form, Icon } from 'semantic-ui-react'
 
-const LoginForm = () => {
+const LoginForm  = forwardRef((props, ref) => {
+  LoginForm.displayName='LoginForm'
 
   const dispatch = useDispatch()
+  const toggleVisibility = ref.current
 
   const [usernameEntry, setUsernameEntry] = useState('')
   const [passwordEntry, setPasswordEntry] = useState('')
@@ -19,42 +20,55 @@ const LoginForm = () => {
       username: usernameEntry,
       password: passwordEntry
     }
-    //console.log(credentials)
     dispatch(handleLogin(credentials))
     setUsernameEntry('')
     setPasswordEntry('')
+    toggleVisibility()
+  }
+
+  const onCancel = (event) => {
+    event.preventDefault()
+    setUsernameEntry('')
+    setPasswordEntry('')
+    toggleVisibility()
   }
 
   return (
     <div className='loginform'>
       <Form onSubmit={onSubmit}>
-        <Form.Field>
-          <Label><Icon name='user' />Username:</Label>
-          <Input
-            type="text"
-            value={usernameEntry}
-            name="Username"
-            id="username"
-            onChange={handleUsernameChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <Label><Icon name='eye slash' />Password:</Label>
-          <Input
-            type="password"
-            value={passwordEntry}
-            name="Password"
-            id="password"
-            onChange={handlePasswordChange}
-          />
-        </Form.Field>
-        <br />
-        <Button id="login-button" type="submit">
-          <Icon name='sign in' />log in
-        </Button>
+        <Form.Group>
+          <Form.Field>
+            <Form.Input inline
+              id="username"
+              label='Username'
+              name="Username"
+              onChange={handleUsernameChange}
+              placeholder='username'
+              type="text"
+              value={usernameEntry}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Form.Input inline
+              label='Password'
+              type="password"
+              value={passwordEntry}
+              name="Password"
+              id="password"
+              placeholder='password'
+              onChange={handlePasswordChange}
+            />
+          </Form.Field>
+          <Form.Button id="login-button" type="submit">
+            <Icon name='sign in' />log in
+          </Form.Button>
+          <Form.Button onClick={onCancel} id='cancel-button' type='reset'>
+            <Icon name='cancel' />cancel
+          </Form.Button>
+        </Form.Group>
       </Form>
     </div>
   )
-}
+})
 
 export default LoginForm

@@ -10,6 +10,8 @@ blogsRouter.get('/:id', async (request, response) => {
     username: 1,
     name: 1,
     blogs: 1,
+    likes: 1,
+    comments: 1
   })
   if (blog) {
     response.json(blog)
@@ -69,6 +71,8 @@ blogsRouter.post('/:id/comments', async (request, response) => {
     username: 1,
     name: 1,
     blogs: 1,
+    likes: 1,
+    comments: 1
   })
   response.status(201).json(updatedBlog)
 })

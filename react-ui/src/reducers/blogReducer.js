@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import blogService from '../services/blogs'
 import { userAddedBlog, userDeletedBlog } from './userReducer'
+import { errorMessage } from './notificationReducer'
 
 const initialState = []
 
@@ -42,8 +43,12 @@ export const createBlog = (content) =>  {
     const newBlog = await blogService.create(content)
     const addedBlog = await blogService.get(newBlog.id)
     console.log('blogReducer createBlog', addedBlog)
-    dispatch(appendBlog(addedBlog))
-    dispatch(userAddedBlog(addedBlog))
+    try {
+      dispatch(appendBlog(addedBlog))
+      dispatch(userAddedBlog(addedBlog))
+    } catch(error) {
+      dispatch(errorMessage(error.response.data.error))
+    }
   }
 }
 

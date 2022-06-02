@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
 import { Container, Button, Header, Form, Input, List,
-  Label, Icon } from 'semantic-ui-react'
+  Label, Icon, Segment } from 'semantic-ui-react'
 
 const Blog = () => {
 
@@ -28,7 +28,7 @@ const Blog = () => {
       }
     } catch (error) {
       console.log(error)
-      dispatch(errorMessage(error.response.data.error, 'error'))
+      dispatch(errorMessage(error.response.data.error))
     }
   }
 
@@ -61,49 +61,58 @@ const Blog = () => {
   console.log(blog)
 
   return (
-    <div className='blog'>
-      <Header as ='h2'>{blog.title}</Header>
-      <a href={blog.url} title={blog.title}>
-        {blog.url}
-      </a><br />
-      Posted by: <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link><br />
-      Likes: {blog.likes}
-      <Button className="like" onClick={() => likeBlog(blog)}>
-        <Icon name='like' />like
-      </Button>
-      {user && user.username === blog.user.username && (
-        <Button className="delete" onClick={() => deleteBlog(blog)}>
-          <Icon name='delete' />delete
+    <div className='blog'><Container>
+      <Segment>
+        <Header as ='h2'><Icon name='book' />{blog.title}</Header>
+        <h3><a href={blog.url} title={blog.title}>
+          {blog.url}
+        </a></h3>
+        <br />
+        Likes: {blog.likes}
+        <Button className="like" onClick={() => likeBlog(blog)}>
+          <Icon name='like' />like
         </Button>
-      )}
-      {blog.comments.length && (
-        <Header as ='h2'>Comments:</Header>
-      )}
-      {blog.comments && (
-        <Container text textAlign='justified'><List>
-          {[...blog.comments].map((comment, i) =>
-            (<List.Item key={i}>
-              <List.Icon name='comment' />
-              <List.Content>{comment}</List.Content>
-            </List.Item>)
-          )}
-        </List></Container>
-      )}
-      <Form onSubmit={doComment}>
-        <Form.Field>
-          <Label><Icon name='comment' />Add a comment</Label>
-          <Input
-            id="comment"
-            value={commentEntry}
-            onChange={handleCommentChange}
-            placeholder="comment?"
-          />
-        </Form.Field>
-        <Button id="save-comment" type="submit">
-          <Icon name='save' />save
-        </Button>
-      </Form>
-    </div>
+      </Segment>
+      <Segment>
+        Posted by: <Icon name='user' /><Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link>
+        {user && user.username === blog.user.username && (
+          <Button className="delete" onClick={() => deleteBlog(blog)}>
+            <Icon name='delete' />delete
+          </Button>
+        )}
+      </Segment>
+      <Segment>
+        {blog.comments.length && (
+          <Header as ='h2'>Comments:</Header>
+        )}
+        {blog.comments && (
+          <Container text textAlign='justified'><List>
+            {[...blog.comments].map((comment, i) =>
+              (<List.Item key={i}>
+                <List.Icon name='comment' />
+                <List.Content>{comment}</List.Content>
+              </List.Item>)
+            )}
+          </List></Container>
+        )}
+      </Segment>
+      <Segment>
+        <Form onSubmit={doComment}>
+          <Form.Field>
+            <Label><Icon name='comment' />Add a comment</Label>
+            <Input
+              id="comment"
+              value={commentEntry}
+              onChange={handleCommentChange}
+              placeholder="comment?"
+            />
+          </Form.Field>
+          <Button id="save-comment" type="submit">
+            <Icon name='save' />save
+          </Button>
+        </Form>
+      </Segment>
+    </Container></div>
   )
 }
 

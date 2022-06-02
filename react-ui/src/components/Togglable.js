@@ -1,18 +1,18 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
-import PropTypes from 'prop-types'
-import { Button, Icon } from 'semantic-ui-react'
+//import PropTypes from 'prop-types'
+import { Button, Icon, Modal } from 'semantic-ui-react'
 
 const Togglable = forwardRef((props, ref) => {
   Togglable.displayName = 'Togglable'
 
-  Togglable.propTypes = {
+  /*Togglable.propTypes = {
     buttonLabel: PropTypes.string.isRequired,
-  }
+  }*/
 
   const [visible, setVisible] = useState(false)
 
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const showWhenVisible = { display: visible ? '' : 'none' }
+  //const hideWhenVisible = { display: visible ? 'none' : '' }
+  //const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -20,28 +20,30 @@ const Togglable = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => toggleVisibility)
 
-  const buttonStyle = {
+  /*const buttonStyle = {
     display: 'flex',
     justifyContent: 'center',
     marginLeft: 'auto',
     marginRight: 'auto',
-  }
+  }*/
 
   return (
-    <div className="togglable">
-      <div style={hideWhenVisible}>
-        <Button onClick={toggleVisibility} style={buttonStyle} className="toggle">
-          <Icon name='compose' />{props.buttonLabel}
-        </Button>
-      </div>
-      <div style={showWhenVisible} className="togglableContent">
+    <Modal
+      open={visible}
+      onClose={() => setVisible(false)}
+      onOpen={() => setVisible(true)}
+      trigger={<Button><Icon name={props.buttonIcon} />{props.buttonLabel}</Button>}
+    >
+      <Modal.Content>
         {props.children}
-        <Button onClick={toggleVisibility} className="cancel" style={buttonStyle}>
-          <Icon name='hide' />cancel
-        </Button>
-      </div>
-    </div>
+      </Modal.Content>
+    </Modal>
   )
 })
-
+/*<Button style={hideWhenVisible} onClick={toggleVisibility} className="toggleVis">
+  <Icon name='compose' />{props.buttonLabel}
+</Button>
+<Button style={showWhenVisible} onClick={toggleVisibility} className="cancelChild">
+  <Icon name='hide' />cancel
+</Button>*/
 export default Togglable

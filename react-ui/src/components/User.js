@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
+import { Header, Container, Icon, Segment, Table } from 'semantic-ui-react'
 
 const User = () => {
   const id = useParams().id
@@ -8,19 +9,29 @@ const User = () => {
     return null
   }
   return (
-    <div className="user">
-      <Header as ='h2'>{user.name} ({user.username})</Header>
-      Blogs:
-      {
-        user.blogs.map(blog => (
-          <div key={blog.id}>
-            <Link to={`/blogs/${blog.id}`}>
-              {blog.title}
-            </Link>
-          </div>
-        ))
-      }
-    </div>
+    <Container><div className="user">
+      <Segment>
+        <Header as ='h2'><Icon name='user' />{user.name} ({user.username})</Header>
+      </Segment>
+      <Table as='table'><Table.Body as='tbody'>
+        {user.blogs.map(blog => (
+          <Table.Row as='tr' key={blog.id}>
+            <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Icon name='book' />
+              <Link to={`/blogs/${blog.id}`}>
+                {blog.title}
+              </Link>
+            </Table.Cell>
+            <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Icon name='like' />{blog.likes} likes
+            </Table.Cell>
+            <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Icon name='comment' />{blog.comments.length} comments
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body></Table>
+    </div></Container>
   )
 }
 
