@@ -1,31 +1,17 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
-//import PropTypes from 'prop-types'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 
 const Togglable = forwardRef((props, ref) => {
   Togglable.displayName = 'Togglable'
 
-  /*Togglable.propTypes = {
-    buttonLabel: PropTypes.string.isRequired,
-  }*/
-
   const [visible, setVisible] = useState(false)
 
-  //const hideWhenVisible = { display: visible ? 'none' : '' }
-  //const showWhenVisible = { display: visible ? '' : 'none' }
-
   const toggleVisibility = () => {
-    setVisible(!visible)
+    setVisible(false)
+    console.log('toggleVisible', visible)
   }
 
   useImperativeHandle(ref, () => toggleVisibility)
-
-  /*const buttonStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  }*/
 
   return (
     <Modal
@@ -37,6 +23,11 @@ const Togglable = forwardRef((props, ref) => {
       <Modal.Content>
         {props.children}
       </Modal.Content>
+      <Modal.Actions>
+        <Button onClick={() => setVisible(false)} id='cancel-button' type='reset'>
+          <Icon name='cancel' />cancel
+        </Button>
+      </Modal.Actions>
     </Modal>
   )
 })

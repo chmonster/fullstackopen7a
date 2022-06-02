@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 import { createSlice } from '@reduxjs/toolkit'
 import blogService from '../services/blogs'
-import { userAddedBlog, userDeletedBlog } from './userReducer'
+import { userAddedBlog, userDeletedBlog, userBlogLiked, userBlogCommented } from './userReducer'
 import { errorMessage } from './notificationReducer'
 
 const initialState = []
@@ -40,7 +40,12 @@ export const initializeBlogs = () => {
 
 export const createBlog = (content) =>  {
   return async dispatch => {
-    const newBlog = await blogService.create(content)
+    let newBlog
+    try {
+      newBlog = await blogService.create(content)
+    } catch(error) {
+      dispatch(errorMessage(error.response.data.error))
+    }
     const addedBlog = await blogService.get(newBlog.id)
     console.log('blogReducer createBlog', addedBlog)
     try {
@@ -70,6 +75,7 @@ export const incLikes = id => {
     const response = await blogService.update(id, updatedBlog)
     console.log('incLikes', response)
     dispatch(updateBlog(response))
+    dispatch(userBlogLiked(updatedBlog))
   }
 }
 
@@ -79,6 +85,7 @@ export const addComment = (id, comment) => {
     const response = await blogService.comment(id, sendObject)
     console.log('addComment', response)
     dispatch(updateBlog(response))
+    dispatch(userBlogCommented(response))
   }
 }
 

@@ -3,15 +3,15 @@ const mongoose = require('mongoose')
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
-    minlength: 3,
+    minlength: [3, 'title too short'],
   },
   author: {
     type: String,
-    minlength: 3,
+    minlength: [3, 'author too short'],
   },
   url: {
     type: String,
-    minlength: 7,
+    minlength: [3, 'url too short'],
   },
   likes: {
     type: Number,

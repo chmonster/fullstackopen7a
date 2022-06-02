@@ -39,15 +39,6 @@ const BlogEntryForm = forwardRef((props, ref) => {
     toggleVisibility()
   }
 
-  const onCancel = (event) => {
-    event.preventDefault()
-    setNewTitle('')
-    setNewUrl('')
-    setNewAuthor('')
-    console.log('Blogentry onCancel')
-    toggleVisibility()
-  }
-
   return (
     <div className="blogEntryForm">
       <Form onSubmit={onSubmit}>
@@ -87,9 +78,6 @@ const BlogEntryForm = forwardRef((props, ref) => {
           </Form.Field>
           <Form.Button id="save-button" type="submit">
             <Icon name='save' />save
-          </Form.Button>
-          <Form.Button id='cancel-button' type='reset' onClick={onCancel}>
-            <Icon name='cancel' />cancel
           </Form.Button>
         </Form.Group>
       </Form>

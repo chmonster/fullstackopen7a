@@ -1,13 +1,18 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
+import { setMenu } from '../reducers/menuReducer'
 import { Container, Button, Header, Form, Input, List,
   Label, Icon, Segment } from 'semantic-ui-react'
 
 const Blog = () => {
+
+  useEffect(() => {
+    dispatch(setMenu('blogs'))
+  }, [])
 
   const [commentEntry, setComment] = useState('')
   const handleCommentChange = (event) => setComment(event.target.value)

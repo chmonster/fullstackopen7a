@@ -21,7 +21,7 @@ const UserList = () => {
                 &nbsp;({user.username})
               </Table.Cell>
               <Table.Cell as='td' style={{ textAlign: 'justify' }}>
-                {user.blogs.length} blogs
+                <Icon name='book' />{user.blogs.length} blogs
               </Table.Cell>
               <Table.Cell as='td' style={{ textAlign: 'justify' }}>
                 <Icon name='like' />
