@@ -50,6 +50,22 @@ export const userDeletedBlog = (blogDeleted) => {
   }
 }
 
+export const userBlogLiked = (blogLiked) => {
+  return async dispatch => {
+    const updatedUser = await userService.get(blogLiked.user.id)
+    //    console.log(updatedUser)
+    dispatch(updateUser(updatedUser))
+  }
+}
+
+export const userBlogCommented = (blogCommented) => {
+  return async dispatch => {
+    const updatedUser = await userService.get(blogCommented.user.id)
+    //    console.log(updatedUser)
+    dispatch(updateUser(updatedUser))
+  }
+}
+
 export const userAddedBlog = (blogAdded) => {
   return async dispatch => {
     //    console.log('userAddedBlog', blogAdded)
