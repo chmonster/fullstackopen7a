@@ -26,13 +26,6 @@ const LoginForm  = forwardRef((props, ref) => {
     toggleVisibility()
   }
 
-  const onCancel = (event) => {
-    event.preventDefault()
-    setUsernameEntry('')
-    setPasswordEntry('')
-    toggleVisibility()
-  }
-
   return (
     <div className='loginform'>
       <Form onSubmit={onSubmit}>
@@ -61,9 +54,6 @@ const LoginForm  = forwardRef((props, ref) => {
           </Form.Field>
           <Form.Button id="login-button" type="submit">
             <Icon name='sign in' />log in
-          </Form.Button>
-          <Form.Button onClick={onCancel} id='cancel-button' type='reset'>
-            <Icon name='cancel' />cancel
           </Form.Button>
         </Form.Group>
       </Form>

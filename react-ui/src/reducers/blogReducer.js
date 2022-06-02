@@ -40,7 +40,12 @@ export const initializeBlogs = () => {
 
 export const createBlog = (content) =>  {
   return async dispatch => {
-    const newBlog = await blogService.create(content)
+    let newBlog
+    try {
+      newBlog = await blogService.create(content)
+    } catch(error) {
+      dispatch(errorMessage(error.response.data.error))
+    }
     const addedBlog = await blogService.get(newBlog.id)
     console.log('blogReducer createBlog', addedBlog)
     try {

@@ -1,7 +1,8 @@
 //import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleLogout } from '../reducers/loginReducer'
-import { useRef, useState } from 'react'
+import { setMenu } from '../reducers/menuReducer'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Icon, Container, Menu } from 'semantic-ui-react'
 import LoginForm from './LoginForm'
@@ -14,9 +15,9 @@ const BlogHeader = () => {
     dispatch(handleLogout())
   }
   const loggedUser = useSelector(state => state.login)
-
-  const [activeItem, setActive] = useState('blogs')
-  const handleItemClick = (name) => setActive(name)
+  const menu = useSelector(state => state.menu)
+  //const [activeItem, setActive] = useState('blogs')
+  const handleItemClick = (name) => dispatch(setMenu(name))
 
   const username = loggedUser ? loggedUser.username : ''
   const name = loggedUser ? loggedUser.name : ''
@@ -41,7 +42,7 @@ const BlogHeader = () => {
         <Menu.Item
           as={Link}
           to='/'
-          active={activeItem === 'blogs'}
+          active={menu === 'blogs'}
           onClick={() => handleItemClick('blogs')}
         >
           <Icon name='book' />Blogs
@@ -49,7 +50,7 @@ const BlogHeader = () => {
         <Menu.Item
           as={Link}
           to='/users'
-          active={activeItem === 'users'}
+          active={menu === 'users'}
           name='Users'
           onClick={() => handleItemClick('users')}
         >
