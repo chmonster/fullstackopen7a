@@ -58,7 +58,7 @@ const BlogHeader = () => {
         </Menu.Item>
         <Menu.Item style={{ textAlign: 'justify' }}>
           <div style={showWhenLoggedIn}>
-            {username} ({name}) logged in
+            <Icon name='user' />{username} ({name}) logged in &nbsp;
             <Button onClick={logout}>
               <Icon name='log out' />Log out
             </Button>
@@ -76,7 +76,7 @@ const BlogHeader = () => {
             </Togglable>
           </div>
           <div style={hideWhenLoggedIn}>
-            Log in to add blog content
+            <Icon name='sign in' />Log in to add blog content
           </div>
         </Menu.Item>
       </Menu>

@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Header, Container, Icon, Segment, Table } from 'semantic-ui-react'
 import { setMenu } from '../reducers/menuReducer'
@@ -8,7 +9,10 @@ const User = () => {
   const user = useSelector(state => state.users.find(u => u.id === id) )
 
   const dispatch = useDispatch()
-  dispatch(setMenu('users'))
+
+  useEffect(() => {
+    dispatch(setMenu('users'))
+  }, [])
 
   if(!user) {
     return null
