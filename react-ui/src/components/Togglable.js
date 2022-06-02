@@ -1,5 +1,4 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
-
 import { Button, Icon, Modal } from 'semantic-ui-react'
 
 const Togglable = forwardRef((props, ref) => {
@@ -32,5 +31,10 @@ const Togglable = forwardRef((props, ref) => {
     </Modal>
   )
 })
-
+/*<Button style={hideWhenVisible} onClick={toggleVisibility} className="toggleVis">
+  <Icon name='compose' />{props.buttonLabel}
+</Button>
+<Button style={showWhenVisible} onClick={toggleVisibility} className="cancelChild">
+  <Icon name='hide' />cancel
+</Button>*/
 export default Togglable

@@ -63,6 +63,8 @@ const Blog = () => {
     return null
   }
 
+  console.log(blog)
+
   return (
     <div className='blog'><Container>
       <Segment>
