@@ -41,7 +41,7 @@ const BlogHeader = () => {
         </Menu.Item>
         <Menu.Item
           as={Link}
-          to='/'
+          to='/blogs'
           active={menu === 'blogs'}
           onClick={() => handleItemClick('blogs')}
         >

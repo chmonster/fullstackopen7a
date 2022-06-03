@@ -1,12 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Header, Container, Icon, Segment, Table } from 'semantic-ui-react'
 import { setMenu } from '../reducers/menuReducer'
+//import { errorMessage } from '../reducers/notificationReducer'
 
-const User = () => {
-  const id = useParams().id
-  const user = useSelector(state => state.users.find(u => u.id === id) )
+const User = ({ user }) => {
+  //const id = useParams().id
 
   const dispatch = useDispatch()
 
@@ -17,6 +17,7 @@ const User = () => {
   if(!user) {
     return null
   }
+
   return (
     <Container><div className="user">
       <Segment>

@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import {
-  BrowserRouter as Router,
-  Routes, Route //, Link
+  Routes, Route, Navigate, useMatch
 } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { initializeLogin } from './reducers/loginReducer'
@@ -27,18 +26,33 @@ const App = () => {
     dispatch(initializeLogin())
   }, [dispatch])
 
+  const matchBlog = useMatch('/blogs/:id')
+  const blogs = useSelector(state => state.blogs)
+  const blog = matchBlog
+    ? blogs.find(b => b.id === matchBlog.params.id)
+    : null
+
+  const matchUser = useMatch('/users/:id')
+  const users = useSelector(state => state.users)
+  const user = matchUser
+    ? users.find(u => u.id === matchUser.params.id)
+    : null
+
+  const login = useSelector(state => state.login)
+
   return (
     <div className='app'><Container>
       <Notification />
-      <Router>
-        <BlogHeader />
-        <Routes>
-          <Route path='/blogs/:id' element={<Blog />} />
-          <Route path='/users/:id' element={<User />} />
-          <Route path='/' element={<BlogList />} />
-          <Route path='/users' element={<UserList />} />
-        </Routes>
-      </Router>
+
+      <BlogHeader />
+      <Routes>
+        <Route path='/blogs/:id' element={<Blog blog={blog} login={login} />} />
+        <Route path='/users/:id' element={<User user={user} />} />
+        <Route exact path='/blogs' element={<BlogList />} />
+        <Route exact path='/users' element={<UserList />} />
+        <Route exact path='/' element={<Navigate replace to="/blogs" />} />
+      </Routes>
+
     </Container></div>
   )
 }

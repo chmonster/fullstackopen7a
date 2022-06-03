@@ -60,7 +60,7 @@ usersRouter.get('/:id', async (request, response) => {
   if (user) {
     response.json(user)
   } else {
-    response.status(404).end()
+    response.status(404).json({ error: `user ${request.params.id} not found` }).end()
   }
 })
 

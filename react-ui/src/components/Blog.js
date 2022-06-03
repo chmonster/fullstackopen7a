@@ -1,18 +1,14 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
 import { setMenu } from '../reducers/menuReducer'
 import { Container, Button, Header, Form, Input, List,
   Label, Icon, Segment } from 'semantic-ui-react'
 
-const Blog = () => {
-
-  useEffect(() => {
-    dispatch(setMenu('blogs'))
-  }, [])
+const Blog = ({ blog, login }) => {
 
   const [commentEntry, setComment] = useState('')
   const handleCommentChange = (event) => setComment(event.target.value)
@@ -21,15 +17,19 @@ const Blog = () => {
   const navigate = useNavigate()
 
   const id = useParams().id
-  const blog = useSelector(state => state.blogs.find(b => b.id === id))
-  const user = useSelector(state => state.login)
+
+  //const login = useSelector(state => state.login)
+
+  useEffect(() => {
+    dispatch(setMenu('blogs'))
+  }, [])
 
   const deleteBlog = (blog) => {
     try {
       if (window.confirm(`Confirm removal of '${blog.title}'`)) {
         dispatch(deleteBlogById(blog.id))
         dispatch(blogDeleted(blog.title))
-        navigate('/')
+        navigate('/blogs')
       }
     } catch (error) {
       console.log(error)
@@ -63,7 +63,7 @@ const Blog = () => {
     return null
   }
 
-  console.log(blog)
+  //console.log(blog)
 
   return (
     <div className='blog'><Container>
@@ -80,7 +80,7 @@ const Blog = () => {
       </Segment>
       <Segment>
         Posted by: <Icon name='user' /><Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link>
-        {user && user.username === blog.user.username && (
+        {login && login.username === blog.user.username && (
           <Button className="delete" onClick={() => deleteBlog(blog)}>
             <Icon name='delete' />delete
           </Button>
@@ -88,17 +88,17 @@ const Blog = () => {
       </Segment>
       <Segment>
         {blog.comments.length && (
-          <Header as ='h2'>Comments:</Header>
-        )}
-        {blog.comments && (
-          <Container text textAlign='justified'><List>
-            {[...blog.comments].map((comment, i) =>
-              (<List.Item key={i}>
-                <List.Icon name='comment' />
-                <List.Content>{comment}</List.Content>
-              </List.Item>)
-            )}
-          </List></Container>
+          <><Header as ='h2'>Comments:</Header>
+            <Container text textAlign='justified'><List>
+              {[...blog.comments].map((comment, i) =>
+                (<List.Item key={i}>
+                  <List.Icon name='comment' />
+                  <List.Content>{comment}</List.Content>
+                </List.Item>)
+              )}
+            </List></Container></>
+        ) || (
+          <Header as ='h2'>No Comments Yet</Header>
         )}
       </Segment>
       <Segment>
