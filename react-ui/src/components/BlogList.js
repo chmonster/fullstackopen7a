@@ -1,15 +1,15 @@
 //import Blog from './Blog'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteBlogById } from '../reducers/blogReducer'
 import { blogDeleted, errorMessage } from '../reducers/notificationReducer'
 import { Button, Table, Icon, Container } from 'semantic-ui-react'
 
-const BlogList = () => {
+const BlogList = ({ blogs, login }) => {
 
   const dispatch = useDispatch()
-  const blogs = useSelector(state => state.blogs)
-  const user = useSelector(state => state.login)
+  //const blogs = useSelector(state => state.blogs)
+  //const user = useSelector(state => state.login)
 
   const deleteBlog = (blog) => {
     try {
@@ -52,7 +52,7 @@ const BlogList = () => {
                 </Link>
               </Table.Cell>
               <Table.Cell>
-                {user && user.username === blog.user.username && (
+                {login && login.username === blog.user.username && (
                   <Button className="delete" onClick={() => deleteBlog(blog)}>
                     <Icon name='delete' />delete blog
                   </Button>

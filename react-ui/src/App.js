@@ -48,8 +48,8 @@ const App = () => {
       <Routes>
         <Route path='/blogs/:id' element={<Blog blog={blog} login={login} />} />
         <Route path='/users/:id' element={<User user={user} />} />
-        <Route exact path='/blogs' element={<BlogList />} />
-        <Route exact path='/users' element={<UserList />} />
+        <Route exact path='/blogs' element={<BlogList blogs={blogs} login={login} />} />
+        <Route exact path='/users' element={<UserList users={users} />} />
         <Route exact path='/' element={<Navigate replace to="/blogs" />} />
       </Routes>
 

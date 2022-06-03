@@ -1,11 +1,11 @@
 //import Blog from './Blog'
-import { useSelector } from 'react-redux'
+//import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Table, Container, Icon } from 'semantic-ui-react'
 
-const UserList = () => {
+const UserList = ({ users }) => {
   //const blogs = useSelector(state => state.blogs)
-  const users = useSelector(state => state.users)
+  //const users = useSelector(state => state.users)
   console.log('users', users)
   return (
     <div className='userlist'><Container>

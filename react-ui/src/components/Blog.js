@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
 import { setMenu } from '../reducers/menuReducer'
-import { Container, Button, Header, Form, Input, List,
-  Label, Icon, Segment } from 'semantic-ui-react'
+import { Container, Button, Header, Form, Input, List, Label, Icon, Segment } from 'semantic-ui-react'
 
 const Blog = ({ blog, login }) => {
 
