@@ -10,6 +10,10 @@ import { Container, Button, Header, Form, Input, List,
 
 const Blog = ({ blog, login }) => {
 
+  useEffect(() => {
+    dispatch(setMenu('blogs'))
+  }, [])
+
   const [commentEntry, setComment] = useState('')
   const handleCommentChange = (event) => setComment(event.target.value)
 
