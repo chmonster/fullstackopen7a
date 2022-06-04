@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { blogDeleted, blogLiked, commentAdded, errorMessage } from '../reducers/notificationReducer'
 import { incLikes, deleteBlogById, addComment } from '../reducers/blogReducer'
@@ -19,7 +19,7 @@ const Blog = ({ blog, login }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const id = useParams().id
+  //const id = useParams().id
 
   //const login = useSelector(state => state.login)
 
@@ -53,7 +53,7 @@ const Blog = ({ blog, login }) => {
   const doComment = (event) => {
     event.preventDefault()
     try {
-      dispatch(addComment(id, commentEntry))
+      dispatch(addComment(blog.id, commentEntry))
       dispatch(commentAdded(blog.title))
       setComment('')
     } catch (error) {

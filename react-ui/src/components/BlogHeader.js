@@ -9,13 +9,13 @@ import LoginForm from './LoginForm'
 import BlogEntryForm from './BlogEntryForm'
 import Togglable from './Togglable'
 
-const BlogHeader = () => {
+const BlogHeader = ({ menu }) => {
   const dispatch = useDispatch()
   const logout = () => {
     dispatch(handleLogout())
   }
   const loggedUser = useSelector(state => state.login)
-  const menu = useSelector(state => state.menu)
+  //const menu = useSelector(state => state.menu)
   //const [activeItem, setActive] = useState('blogs')
   const handleItemClick = (name) => dispatch(setMenu(name))
 

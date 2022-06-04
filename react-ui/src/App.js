@@ -39,18 +39,19 @@ const App = () => {
     : null
 
   const login = useSelector(state => state.login)
+  const menu = useSelector(state => state.menu)
 
   return (
     <div className='app'><Container>
       <Notification />
 
-      <BlogHeader />
+      <BlogHeader menu={menu} />
       <Routes>
         <Route path='/blogs/:id' element={<Blog blog={blog} login={login} />} />
         <Route path='/users/:id' element={<User user={user} />} />
-        <Route exact path='/blogs' element={<BlogList blogs={blogs} login={login} />} />
-        <Route exact path='/users' element={<UserList users={users} />} />
-        <Route exact path='/' element={<Navigate replace to="/blogs" />} />
+        <Route path='/blogs' element={<BlogList blogs={blogs} login={login} />} />
+        <Route path='/users' element={<UserList users={users} />} />
+        <Route path='/' element={<Navigate replace to="/blogs" />} />
       </Routes>
 
     </Container></div>

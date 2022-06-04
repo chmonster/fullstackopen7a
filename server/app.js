@@ -1,5 +1,6 @@
 const config = require('./utils/config')
 const express = require('express')
+const path = require('path')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
@@ -9,9 +10,6 @@ const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
-//const Blog = require('./models/blog')
-
-
 
 logger.info('connecting to', config.MONGODB_URI)
 
@@ -27,7 +25,7 @@ mongoose
 app.use(middleware.tokenExtractor)
 
 app.use(cors())
-app.use(express.static('react-ui/build'))
+app.use(express.static(path.resolve(__dirname, '../react-ui/build')))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
@@ -39,6 +37,10 @@ if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
 }
+
+app.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'))
+})
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
