@@ -72,7 +72,7 @@ const Blog = ({ blog, login }) => {
     <div className='blog'><Container>
       <Segment>
         <Header as ='h2'><Icon name='book' />{blog.title}</Header>
-        <h3><a href={blog.url} title={blog.title}>
+        <h3><a href={blog.url} title={blog.title} target='_blank' rel='noreferrer'>
           {blog.url}
         </a></h3>
         <br />
