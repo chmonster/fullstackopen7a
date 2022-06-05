@@ -70,18 +70,19 @@ const Blog = ({ blog, login }) => {
 
   return (
     <div className='blog'><Container>
-      <Segment>
+      <Segment fixed>
         <Header as ='h2'><Icon name='book' />{blog.title}</Header>
         <h3><a href={blog.url} title={blog.title} target='_blank' rel='noreferrer'>
-          {blog.url}
+          <div className='longText'>
+            {blog.url}
+          </div>
         </a></h3>
         <br />
         Likes: {blog.likes}
         <Button className="like" onClick={() => likeBlog(blog)}>
           <Icon name='like' />like
         </Button>
-      </Segment>
-      <Segment>
+        <br />
         Posted by: <Icon name='user' /><Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link>
         {login && login.username === blog.user.username && (
           <Button className="delete" onClick={() => deleteBlog(blog)}>

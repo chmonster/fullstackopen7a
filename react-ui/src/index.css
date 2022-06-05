@@ -24,6 +24,12 @@ table {
   margin-right: auto;
 }
 
+.longText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 ul {
   width: 25%;
   text-align: left;

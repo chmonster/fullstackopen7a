@@ -35,7 +35,7 @@ const BlogHeader = ({ menu }) => {
 
   return (
     <div className="blogheader"><Container>
-      <Menu pointing borderless>
+      <Menu pointing borderless stackable>
         <Menu.Item as='h1' style={{ textAlign: 'justify', verticalAlign: 'middle' }}>
           Blog-0-Rama
         </Menu.Item>
@@ -59,6 +59,10 @@ const BlogHeader = ({ menu }) => {
         <Menu.Item style={{ textAlign: 'justify' }}>
           <div style={showWhenLoggedIn}>
             <Icon name='user' />{username} ({name}) logged in &nbsp;
+          </div>
+        </Menu.Item>
+        <Menu.Item>
+          <div style={showWhenLoggedIn}>
             <Button onClick={logout}>
               <Icon name='log out' />Log out
             </Button>
