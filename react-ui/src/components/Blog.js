@@ -104,8 +104,6 @@ const Blog = ({ blog, login }) => {
         ) || (
           <Header as ='h2'>No Comments Yet</Header>
         )}
-      </Segment>
-      <Segment>
         <Form onSubmit={doComment}>
           <Form.Field>
             <Label><Icon name='comment' />Add a comment</Label>

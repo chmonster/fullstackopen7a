@@ -30,19 +30,19 @@ const BlogList = ({ blogs, login }) => {
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
             <Table.Row as='tr' key={blog.id}>
-              <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Table.Cell as='td'>
                 <Icon name='book' />
                 <Link to={`/blogs/${blog.id}`}>
                   {blog.title}
                 </Link>
               </Table.Cell>
-              <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Table.Cell as='td'>
                 <Icon name='pencil' />{blog.author}
               </Table.Cell>
-              <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Table.Cell as='td'>
                 <Icon name='like' />{blog.likes} Likes
               </Table.Cell>
-              <Table.Cell as='td' style={{ textAlign: 'justify' }}>
+              <Table.Cell as='td'>
                 <Icon name='comment' />{blog.comments.length} Comments
               </Table.Cell>
               <Table.Cell as='td'>
