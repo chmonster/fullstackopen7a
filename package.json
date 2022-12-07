@@ -2,7 +2,7 @@
   "name": "bloglist",
   "version": "1.0.0",
   "description": "Fullstackopen part 7 project",
-  "main": "/server/index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server",
     "build": "cd ./react-ui/ && npm install && npm run build",
