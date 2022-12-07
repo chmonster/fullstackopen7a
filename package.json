@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Fullstackopen part 7 project",
   "scripts": {
+    "main": "node server",
     "start": "node server",
     "build": "cd ./react-ui/ && npm install && npm run build",
     "dev": "NODE_ENV=development nodemon index.js",
