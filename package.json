@@ -16,8 +16,8 @@
     "clearout": "rm -rf node_modules && npm install && cd ./react-ui && rm -rf node_modules && npm install"
   },
   "engines": {
-    "node": "14.19.3",
-    "npm": "8.10.0"
+    "node": "v18.9.0",
+    "npm": "8.19.1"
   },
   "author": "P Moore",
   "cacheDirectories": [
